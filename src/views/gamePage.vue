@@ -152,6 +152,10 @@ th,
     font-size: 2rem;
   }
 }
+ .buttons{
+    display: grid;
+    gap: 10px;
+  }
 .links {
   text-decoration: none;
 }
