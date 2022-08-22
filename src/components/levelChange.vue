@@ -4,7 +4,7 @@
       <label for="levels">Difficulty:</label>
       <select name="levels" id="levels">
         <option v-for="level in levels" :key="level[`id`]">
-          <button class="change_level">{{ level[`type`] }}</button>
+          <button @click="select_level">{{ level[`type`] }}</button>
         </option>
       </select>
     </form>
@@ -13,12 +13,11 @@
 
 <script>
 export default {
-  mounted () {
-    this.button = document.querySelectorAll(`.change_level`);
-    this.button.addEventListener(`click`,this.select_level);
-  },
+ 
   methods: {
-    select_level() {},
+    select_level(details) {
+      details
+    },
   },
   data() {
     return {
