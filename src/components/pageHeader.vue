@@ -11,13 +11,16 @@
       >
       <!-- this router link will redirect to the game -->
       <router-link class="links" to="/game_page">Game Page</router-link>
+      <level-change></level-change>
     </div>
   </div>
 </template>
 
 <script>
 import Cookies from "vue-cookies";
+import LevelChange from "@/components/levelChange.vue";
 export default {
+  components: { LevelChange },
   mounted() {
     if (Cookies.get(`token`)) {
       this.logged_in = true;
