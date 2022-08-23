@@ -11,7 +11,7 @@
           <td class="buttons">
             <button v-on:click="get_number">Play</button>
             <button v-on:click="reset_game">Restart</button>
-            </td>
+          </td>
           <th>WINS</th>
           <th>LOSSES</th>
         </tr>
@@ -53,12 +53,16 @@ export default {
     PageHeader,
   },
   mounted() {
-    // following code will check for cookies of  levels 
+    // following code will check for cookies of  levels
     // if page get refresh the user will still have same difficulty selected and resume the game
-    if(Cookies.get(`level`)){
-      this.number = Cookies.get(`level`);
+    if (Cookies.get(`level`)) {
+      this.number = Number(Cookies.get(`level`));
+    } else {
+      // if there is a fresh start then the level will be one 
+      // because the level is decided by number
+      this.number = 1;
     }
-    this.$root.$on(`send_number` , this.change_number);
+    this.$root.$on(`send_number`, this.change_number);
     // when page is loaded it will check for cookies names token and set cookies_exist equal to true
     // which then help table div to show something on the page according to conditions
     if (Cookies.get(`token`)) {
@@ -77,17 +81,17 @@ export default {
     }
   },
   methods: {
-    change_number(number){
+    change_number(number) {
       this.number = number;
     },
-    // reset game will get triggered by restart button 
+    // reset game will get triggered by restart button
     // it will set the variables to zero
-    reset_game(){
-        this.win_count = 0;
-        Cookies.remove(`win`);
-        this.loss_count = 0;
-        Cookies.remove(`loss`);
-        this.score = 0;
+    reset_game() {
+      this.win_count = 0;
+      Cookies.remove(`win`);
+      this.loss_count = 0;
+      Cookies.remove(`loss`);
+      this.score = 0;
     },
     // check count is triggered by api response if it is successful
     // it will check the score value which is set though response
@@ -115,7 +119,8 @@ export default {
         // and call the check count function
         .then((response) => {
           this.score = response[`data`][0];
-          this.check_count();
+          // will check for cookies named level if it is there then refreshing page will not change the level of difficulty
+            this.check_count();
         })
         // if there is an error with api then message variable will store the value of the error
         .catch((error) => {
@@ -136,7 +141,7 @@ export default {
       //   message will be used for storing error messages
       message: undefined,
       // number will be used to store value from other component and help showing win and loss count
-      number: undefined
+      number: undefined,
     };
   },
 };
@@ -148,7 +153,6 @@ export default {
   .table {
     display: grid;
     grid-auto-flow: column;
-    
   }
 }
 td,
@@ -163,10 +167,10 @@ th,
     font-size: 2rem;
   }
 }
- .buttons{
-    display: grid;
-    gap: 10px;
-  }
+.buttons {
+  display: grid;
+  gap: 10px;
+}
 .links {
   text-decoration: none;
 }
@@ -175,7 +179,7 @@ th,
     color: red;
     font-weight: 300;
   }
-  .score{
+  .score {
     font-size: 4rem;
   }
 }
