@@ -11,7 +11,7 @@
       >
       <!-- this router link will redirect to the game -->
       <router-link class="links" to="/game_page">Game Page</router-link>
-      <level-change></level-change>
+      <level-change v-if="logged_in === true"></level-change>
     </div>
   </div>
 </template>
@@ -22,6 +22,8 @@ import LevelChange from "@/components/levelChange.vue";
 export default {
   components: { LevelChange },
   mounted() {
+    // if cookies token is present then logged in is true and use it as a condition in html
+    // to display something
     if (Cookies.get(`token`)) {
       this.logged_in = true;
     }

@@ -53,6 +53,12 @@ export default {
     PageHeader,
   },
   mounted() {
+    // following code will check for cookies of  levels 
+    // if page get refresh the user will still have same difficulty selected and resume the game
+    if(Cookies.get(`level`)){
+      this.number = Cookies.get(`level`);
+    }
+    this.$root.$on(`send_number` , this.change_number);
     // when page is loaded it will check for cookies names token and set cookies_exist equal to true
     // which then help table div to show something on the page according to conditions
     if (Cookies.get(`token`)) {
@@ -71,6 +77,9 @@ export default {
     }
   },
   methods: {
+    change_number(number){
+      this.number = number;
+    },
     // reset game will get triggered by restart button 
     // it will set the variables to zero
     reset_game(){
@@ -86,12 +95,12 @@ export default {
     // and update the cookies value of win equal to the new win count
     check_count() {
       if (this.score >= 50) {
-        this.win_count++;
+        this.win_count = Number(this.win_count) + Number(this.number);
         Cookies.set(`win`, this.win_count);
       } else if (this.score < 50) {
         // else if score value is less than 50 then it will increase only the loss count by one
         // and update the cookies value of loss equal to the new loss count
-        this.loss_count++;
+        this.loss_count = Number(this.loss_count) + Number(this.number);
         Cookies.set(`loss`, this.loss_count);
       }
     },
@@ -126,6 +135,8 @@ export default {
       loss_count: 0,
       //   message will be used for storing error messages
       message: undefined,
+      // number will be used to store value from other component and help showing win and loss count
+      number: undefined
     };
   },
 };
