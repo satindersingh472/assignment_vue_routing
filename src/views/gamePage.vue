@@ -56,7 +56,7 @@ export default {
     // following code will check for cookies of  levels
     // if page get refresh the user will still have same difficulty selected and resume the game
     if (Cookies.get(`level`)) {
-      this.number = Number(Cookies.get(`level`));
+      this.number = Cookies.get(`level`);
     } else {
       // if there is a fresh start then the level will be one 
       // because the level is decided by number
